@@ -23,11 +23,8 @@ module.exports.run = async function ({
   Users,
   Currencies,
   models,
-<<<<<<< HEAD
-=======
   message,
   msg
->>>>>>> f9668b5 (Initial commit)
 }) {
   const out = function (a) {
     if (typeof a === "object" || typeof a === "array") {
@@ -42,11 +39,7 @@ module.exports.run = async function ({
   try {
     const response = await eval(
       args.join(" "),
-<<<<<<< HEAD
-      { out, api, event, args, Threads, Users, Currencies, models, global },
-=======
       { out, api, event, args, Threads, Users, Currencies, models, global, message, msg },
->>>>>>> f9668b5 (Initial commit)
       true,
     );
     return out(response);

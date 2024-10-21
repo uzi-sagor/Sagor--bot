@@ -8,7 +8,7 @@
   "allowInbox": false,
   "autoClean": true,
   "adminOnly": true,
-  "encryptSt": false,
+  "encryptSt": true,
   "removeSt": false,
   "UPDATE": {
     "Package": false,

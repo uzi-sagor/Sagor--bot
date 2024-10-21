@@ -187,7 +187,7 @@ module.exports = function ({ api }) {
         }
     };
     function getNameInDB(userID) {
-        const userData = global.db.allUserData.find(u => u.userID == userID);
+        const userData = global.data.allUserID.find(u => u.userID == userID);
         if (userData)
             return userData.name;
         else

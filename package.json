@@ -33,10 +33,7 @@
     "child_process": "^1.0.2",
     "eval": "^0.1.8",
     "express": "^4.21.1",
-<<<<<<< HEAD
-=======
     "fca-liane-utils": "^1.4.0",
->>>>>>> f9668b5 (Initial commit)
     "fontstyles": "^1.0.5",
     "form-data": "^4.0.0",
     "fs-extra": "^11.2.0",

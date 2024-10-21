@@ -125,8 +125,6 @@ module.exports = function ({ api }) {
     }
   });
 
-<<<<<<< HEAD
-=======
  const runObj = {
     api,
     Users,
@@ -144,23 +142,12 @@ module.exports = function ({ api }) {
   const handleRefresh = require("./handle/handleRefresh")(runObj);
   const handleCreateDatabase = require("./handle/handleCreateDatabase")(runObj);
 
->>>>>>> f9668b5 (Initial commit)
   fs.readFile(logarithms, "utf8", (err, data) => {
     if (err) {
       console.error(err);
       return;
     }
   });
-<<<<<<< HEAD
-};
-
-/** 
-THIZ BOT WAS MADE BY ME(CATALIZCS) AND MY BROTHER SPERMLORD - DO NOT STEAL MY CODE (つ ͡ ° ͜ʖ ͡° )つ ✄ ╰⋃╯
-THIZ FILE WAS MODIFIED BY ME(@YanMaglinte) - DO NOT STEAL MY CREDITS (つ ͡ ° ͜ʖ ͡° )つ ✄ ╰⋃╯
-THIZ FILE WAS MODIFIED BY ANOTHER PERSON(@lianecagara) - box MIT 🫨
-**/
-  
-=======
   //////////////////////////////////////////////////
   //========= Send event to handle need =========//
   /////////////////////////////////////////////////
@@ -196,4 +183,3 @@ THIZ FILE WAS MODIFIED BY ANOTHER PERSON(@lianecagara) - box MIT 🫨
     }
   };
 };
->>>>>>> f9668b5 (Initial commit)

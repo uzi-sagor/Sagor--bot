@@ -205,9 +205,6 @@ module.exports.removeBackground = async (image) => {
       return rejectFunc(error)
     });
   return returnPromise;
-<<<<<<< HEAD
-}
-=======
 }
 
 module.exports.message = async (api, event) => {
@@ -276,4 +273,3 @@ module.exports.message = async (api, event) => {
       },
     };
   }
->>>>>>> f9668b5 (Initial commit)

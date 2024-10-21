@@ -176,10 +176,7 @@ function buildAPI(globalOptions, html, jar) {
     'addUserToGroup',
     'changeAdminStatus',
     'changeArchivedStatus',
-<<<<<<< HEAD
-=======
     'changeAvatar',
->>>>>>> f9668b5 (Initial commit)
     'changeBio',
     'changeBlockedStatus',
     'changeGroupImage',
@@ -194,10 +191,7 @@ function buildAPI(globalOptions, html, jar) {
     'getCurrentUserID',
     'getEmojiUrl',
     'getFriendsList',
-<<<<<<< HEAD
-=======
     'getMessage',
->>>>>>> f9668b5 (Initial commit)
     'getThreadHistory',
     'getThreadInfo',
     'getThreadList',
@@ -213,10 +207,7 @@ function buildAPI(globalOptions, html, jar) {
     'markAsReadAll',
     'markAsSeen',
     'muteThread',
-<<<<<<< HEAD
-=======
     'refreshFb_dtsg',
->>>>>>> f9668b5 (Initial commit)
     'removeUserFromGroup',
     'resolvePhotoUrl',
     'searchForThread',
@@ -228,12 +219,8 @@ function buildAPI(globalOptions, html, jar) {
     'threadColors',
     'unsendMessage',
     'unfriend',
-<<<<<<< HEAD
-  //  'editMessage',
-=======
     'uploadAttachment',
     'editMessage',
->>>>>>> f9668b5 (Initial commit)
 
     // HTTP
     'httpGet',
@@ -592,11 +579,7 @@ function login(loginData, options, callback) {
     logRecordSize: defaultLogRecordSize,
     online: false,
     emitReady: false,
-<<<<<<< HEAD
-    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
-=======
     userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/600.3.18 (KHTML, like Gecko) Version/8.0.3 Safari/600.3.18"
->>>>>>> f9668b5 (Initial commit)
   };
 
   setOptions(globalOptions, options);

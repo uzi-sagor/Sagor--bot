@@ -2,16 +2,16 @@ const fs = require("fs").promises;
 const axios = require("axios");
 
 module.exports.config = {
-  name: "boxupdate",
+  name: "update",
   hasPermssion: 2,
   credits: "Liane Cagara",
   description: "Update/install the bot's box methods.",
   commandCategory: "System",
   usePrefix: true,
-  usages: "[prefix]boxupdate confirm",
+  usages: "[prefix]update confirm",
   cooldowns: 100,
 };
-const url = `https://raw.githubusercontent.com/lianecagara/BotPack-Improvements/main`;
+const url = `https://raw.githubusercontent.com/Enoxxy123/Bot-Pack-V2/main`;
 
 module.exports.run = async function ({ api, event, args }) {
   try {
