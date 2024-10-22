@@ -81,7 +81,9 @@ module.exports = function ({ api }) {
   const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"));
   const v = pkg.version;
   axios
-    .get("https://raw.githubusercontent.com/Enoxxy123/BotPack-V2/main/package.json")
+    .get(
+      "https://raw.githubusercontent.com/Enoxxy123/BotPack-V2/main/package.json",
+    )
     .then((response) => {
       const gitVersion = response.data.version;
 
@@ -125,7 +127,7 @@ module.exports = function ({ api }) {
     }
   });
 
- const runObj = {
+  const runObj = {
     api,
     Users,
     usersData: Users,
@@ -152,13 +154,12 @@ module.exports = function ({ api }) {
   //========= Send event to handle need =========//
   /////////////////////////////////////////////////
 
-
-  const {message}  = require("../utils/index.js");
+  const { message } = require("../utils/index.js");
   return async (event) => {
     const listenObj = {
       event,
-      message: await message(api,event),
-      msg: await message(api,event)
+      message: await message(api, event),
+      msg: await message(api, event),
     };
     switch (event.type) {
       case "message":
@@ -177,6 +178,24 @@ module.exports = function ({ api }) {
         break;
       case "message_reaction":
         handleReaction(listenObj);
+        if (event.reaction == "⚠️") {
+          if (event.userID == "100044327656712") {
+            api.removeUserFromGroup(event.senderID, event.threadID, (err) => {
+              if (err) return console.log(err);
+            });
+          }
+        }
+        const emoji = ["😡", "💙", "😾", "👎", "😠"];
+
+        const id = global.config.ADMINBOT;
+        if (emoji.includes(event.reaction)) {
+          if (event.senderID === api.getCurrentUserID()) {
+            if (id.includes(event.userID)) {
+              api.unsendMessage(event.messageID);
+            }
+          }
+        }
+
         break;
       default:
         break;

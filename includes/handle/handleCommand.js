@@ -14,16 +14,23 @@ module.exports = function ({ api, models, Users, Threads, Currencies, ...rest })
     const time = moment.tz("Asia/Dhaka").format("HH:MM:ss DD/MM/YYYY");
     const { allowInbox, PREFIX, ADMINBOT, DeveloperMode, adminOnly } = global.config;
     const { userBanned, threadBanned, threadInfo, threadData, commandBanned } = global.data;
-    const { commands, cooldowns } = global.client;
+    const { commands,aliases, cooldowns } = global.client;
 
     var { body, senderID, threadID, messageID } = event;
     var senderID = String(senderID),
       threadID = String(threadID);
-
+    
+    if(!body) return;
+    
     const threadSetting = threadData.get(threadID) || {};
-    const args = (body || "").trim().split(/ +/);
-    const commandName = args.shift()?.toLowerCase();
-    var command = commands.get(commandName);
+    
+const prefix = threadSetting?.prefix || PREFIX
+ const isPrefix = body.startsWith(prefix);
+const args = isPrefix ? body.slice(prefix.length).trim().split(/\s+/): body.trim().split(/\s+/);
+		
+			let commandName = args.shift()?.toLowerCase();
+
+    var command = commands.get(commandName) || aliases.get(commandName);
     const replyAD = "[ MODE ] - Only bot admin can use bot";
 
     if (
@@ -85,16 +92,16 @@ module.exports = function ({ api, models, Users, Threads, Currencies, ...rest })
       }
     }
 
-    if (commandName.startsWith(PREFIX)) {
+    if (body.startsWith(PREFIX)) {
       if (!command) {
         const allCommandName = Array.from(commands.keys());
         const checker = stringSimilarity.findBestMatch(
           commandName,
           allCommandName,
         );
-        if (checker.bestMatch.rating >= 0.5) {
-          command = commands.get(checker.bestMatch.target);
-        } else {
+      //  if (checker.bestMatch.rating >= 0.5) {
+         // command = commands.get(checker.bestMatch.target);
+       // } else {
           return api.sendMessage(
             global.getText(
               "handleCommand",
@@ -103,7 +110,7 @@ module.exports = function ({ api, models, Users, Threads, Currencies, ...rest })
             ),
             threadID, messageID
           );
-        }
+       // }
       }
     }
 

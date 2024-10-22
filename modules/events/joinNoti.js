@@ -146,11 +146,9 @@ axios.get(gifUrl, { responseType: 'arraybuffer' })
         abx.push(fs.createReadStream(__dirname + `/cache/join/${o}.png`))
       }
       memLength.sort((a, b) => a - b);
-<<<<<<< HEAD
-      (typeof threadData.customJoin == "undefined") ? msg = `🌟 Welcome new member {name} to the group {threadName}\n→ URL Profile:\nhttps://www.facebook.com/profile.php?id={iduser}\n→ {type} are the group's {soThanhVien}${suffix} member\n→ Added to the group by: {author}\n→ Added by facebook link: https://www.facebook.com/profile.php?id={uidAuthor}\n─────────────────\n[ {time} - {thu} ]` : msg = threadData.customJoin;
-=======
-      (typeof threadData.customJoin == "undefined") ? msg = `🌟 Welcome new member {name} to the group {threadName}\n→ {type} are the group's {soThanhVien}${suffix} member\n→ Added to the group by: {author}\n─────────────────\n[ {time} - {thu} ]` : msg = threadData.customJoin;
->>>>>>> f9668b5 (Initial commit)
+
+      (typeof threadData.customJoin == "undefined") ? msg = `🌟 Welcome new member {name} to the group {threadName}\n→ {type} are the group's {soThanhVien}${suffix} member\n→ Added to the group by: {author}\n───────────────────\n[ {time} - {thu} ]` : msg = threadData.customJoin;
+
       var nameAuthor = await Users.getNameUser(event.author)
       msg = msg
         .replace(/\{iduser}/g, iduser.join(', '))

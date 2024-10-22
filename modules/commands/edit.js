@@ -5,15 +5,14 @@ module.exports.config = {
   credits: 'Yan Maglinte',
   description: `Edit Bot's messages!`,
   usePrefix: true,
+  allowPrefix: true,
   commandCategory: 'message',
   usages: 'reply to a message then type <prefix>edit <your_message>',
   cooldowns: 5,
 };
 
 module.exports.run = async function({ api, event, args, message }) {
-  if (!message) {
-    return api.sendMessage("❌ | Unsupported Version.", event.threadID);
-  }
+ 
   const reply = event.messageReply?.body;
   const edit = `${args.join(" ")}`;
   
