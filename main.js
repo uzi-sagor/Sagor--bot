@@ -400,12 +400,13 @@ function onBot() {
               );
               continue;
             }
-          /*  if (!config?.commandCategory) {
+            if (!config?.commandCategory) {
               console.log(
                 chalk.red(`[ COMMAND ] ${command} commandCategory is empty!`),
               );
               continue;
             }
+              /*
             if (!config?.hasOwnProperty("usePrefix")) {
               console.log(
                 `Command`,

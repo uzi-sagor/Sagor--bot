@@ -13,7 +13,7 @@ module.exports.config = {
   hasPermssion: 0,
   category: "media",
   commandCategory: "media",
-  usePrefix:, true,
+  usePrefix:true,
   prefix: true,
   description:  "Get manga info and read",
   countDown: 2,

@@ -1,12 +1,12 @@
 module.exports.config = {
   name: "spamkick",
   version: "1.0.0",
-  hasPermission: 0, 
+  hasPermssion: 0, 
   credits: "Dipto",
   usePrefix: true,
-  Prefix: true,
-  Description: { en:"Automatically kick a user who spams messages in a group chat"},
-  category: "group",
+  prefix: true,
+  description: { en:"Automatically kick a user who spams messages in a group chat"},
+  commandCategory: "group",
   usage: { en:"[on/off] or [settings]"},
   cooldowns: 5
 };
@@ -25,7 +25,7 @@ module.exports.handleEvent = async ({ api, event, Users }) => {
     const messageLimit = 14; //Limit of message
 
     if (messages > messageLimit && timePassed < timeLimit) {
-      api.removeUserFromGroup(senderID, threadID, (err) => {
+      api.removeUserFromGroup(senderID, threadID, async (err) => {
         if (err) {
           console.error(err);
         } else {

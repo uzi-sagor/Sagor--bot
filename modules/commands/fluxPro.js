@@ -9,11 +9,12 @@ const baseApiUrl = async () => {
 module.exports.config = {
   name: "fluxpro",
   version: "2.0",
-  hasPermission: 2,
+  hasPermssion: 2,
   credits: "Dipto",
   description: "Generate images with Flux.1 Pro",
   commandCategory: "𝗜𝗠𝗔𝗚𝗘 𝗚𝗘𝗡𝗘𝗥𝗔𝗧𝗢𝗥",
   preimum: true,
+  usePrefix: true,
   usages: "{pn} [prompt] --ratio 1024x1024\n{pn} [prompt]",
   cooldowns: 15,
 };
@@ -37,7 +38,7 @@ module.exports.run = async ({ event, args, api }) => {
 
     api.setMessageReaction("✅", event.messageID, (err) => {}, true);
      api.unsendMessage(ok.messageID)
-    const attachment = (await axios.get(apiUrl, { responseType: "stream" }).data;
+    const attachment = (await axios.get(apiUrl, { responseType: "stream" })).data
     const endTime = new Date().getTime();
     await api.sendMessage({
           body: `Here's your image\nModel Name: "Flux.1 Pro"\nTime Taken: ${(endTime - startTime) / 1000} second/s`, 

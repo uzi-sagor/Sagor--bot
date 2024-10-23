@@ -15,7 +15,7 @@ module.exports = {
     credits: "JARiF||Romim",
     permission: 0,
     description: "Upscale your image.",
-    commandCategory:: "utility",
+    commandCategory: "utility",
     prefix: true,
     usePrefix: true
   },

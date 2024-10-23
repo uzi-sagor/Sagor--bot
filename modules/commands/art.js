@@ -60,4 +60,4 @@ module.exports = {
       await api.sendMessage(`Error: ${error.message}`, event.threadID, event.messageID);
     }
   }
-});
+};

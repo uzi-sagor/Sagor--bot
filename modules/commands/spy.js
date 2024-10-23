@@ -14,7 +14,7 @@ module.exports = {
     usePrefix: true,
     credits: "Dipto",
     description: "Get user information and profile photo",
-    category: "information",
+    commandCategory: "information",
     cooldowns: 10,
   },
 

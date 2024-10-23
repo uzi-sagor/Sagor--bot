@@ -9,9 +9,9 @@ module.exports.config = {
   usages: "[Shows Commands]",
   cooldowns: 5,
   envConfig: {
-		autoUnsend: true,
-		delayUnsend: 60
-	}
+    autoUnsend: true,
+    delayUnsend: 60
+  }
 };
 
 module.exports.languages = {
@@ -76,9 +76,11 @@ module.exports.run = async function ({ api, event, args, getText }) {
 
   if (!command) {
     const commandList = Array.from(commands.values());
-    const categories = new Set(commandList.map((cmd) => cmd.config.commandCategory.toLowerCase()));
+    const categories = new Set(
+      commandList.map((cmd) => 
+        (cmd.config?.commandCategory || cmd.config?.category || "unknown").toLowerCase()));
     const categoryCount = categories.size;
-
+  
     const categoryNames = Array.from(categories);
     const itemsPerPage = 10;
     const totalPages = Math.ceil(categoryNames.length / itemsPerPage);
@@ -108,8 +110,8 @@ module.exports.run = async function ({ api, event, args, getText }) {
     for (let i = 0; i < visibleCategories.length; i++) {
       const category = visibleCategories[i];
       const categoryCommands = commandList.filter(
-        (cmd) =>
-          cmd.config.commandCategory.toLowerCase() === category
+        (cmd) => 
+          (cmd.config.commandCategory ? cmd.config.commandCategory.toLowerCase() : 'unknown') === category
       );
       const commandNames = categoryCommands.map((cmd) => cmd.config.name);
       const numberFont = [
@@ -186,11 +188,11 @@ module.exports.run = async function ({ api, event, args, getText }) {
 
     const sentMessage = await api.sendMessage(msgg, threadID, messageID);
 
-    
+
       setTimeout(() => {
   api.unsendMessage(sentMessage.messageID);
       }, 60000);
-    
+
   } else {
     return api.sendMessage(
       getText(

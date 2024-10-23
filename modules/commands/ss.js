@@ -10,14 +10,13 @@ module.exports.config = {
   name: "ss",
   version: "1.0",
   credits: "Dipto",
-  role: 0,
-  hasPermssion 0,
+  hasPermssion:0,
   usePrefix: true,
   prefix: true,
   description: "Take a screenshot of a website",
-  commabdCategory: "utility",
+  commandCategory: "utility",
   category: "utility",
-  guide: { en: "screenshot [URL]" },
+  usages: "screenshot [URL]" ,
   coolDowns: 5,
 };
 module.exports.run = async function ({ api, event, args }) {

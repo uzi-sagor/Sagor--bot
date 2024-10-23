@@ -19,7 +19,6 @@ module.exports.config = {
     commandCategory: "MEDIA",
     category: " MEDIA",
     usePrefix: true,
-    prefix, true,
     usages: "<search> - <optional: number of results | blank>",
 };
 
