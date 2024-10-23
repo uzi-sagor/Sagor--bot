@@ -186,11 +186,11 @@ module.exports.run = async function ({ api, event, args, getText }) {
 
     const sentMessage = await api.sendMessage(msgg, threadID, messageID);
 
-    if (autoUnsend) {
-      setTimeout(async () => {
-        await api.unsendMessage(sentMessage.messageID);
-      }, delayUnsend * 1000);
-    }
+    
+      setTimeout(() => {
+  api.unsendMessage(sentMessage.messageID);
+      }, 60000);
+    
   } else {
     return api.sendMessage(
       getText(

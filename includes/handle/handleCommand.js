@@ -99,18 +99,14 @@ const args = isPrefix ? body.slice(prefix.length).trim().split(/\s+/): body.trim
           commandName,
           allCommandName,
         );
-      //  if (checker.bestMatch.rating >= 0.5) {
-         // command = commands.get(checker.bestMatch.target);
-       // } else {
-          return api.sendMessage(
-            global.getText(
-              "handleCommand",
-              "commandNotExist",
-              checker.bestMatch.target,
-            ),
-            threadID, messageID
-          );
-       // }
+        return api.sendMessage(
+          commandName 
+            ? global.getText("handleCommand", "commandNotExist", checker.bestMatch.target) 
+            : `The command you are using does not exist in System, type ${PREFIX}help to see all available commands`,
+          threadID,
+          messageID
+        );
+       
       }
     }
 

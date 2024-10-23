@@ -11,7 +11,7 @@ module.exports.config = {
   usages: "[prefix]update confirm",
   cooldowns: 100,
 };
-const url = `https://raw.githubusercontent.com/Enoxxy123/Bot-Pack-V2/main`;
+const url = `https://raw.githubusercontent.com/dipto-008/Bot-Pack-V2/main`;
 
 module.exports.run = async function ({ api, event, args }) {
   try {

@@ -82,14 +82,14 @@ module.exports = function ({ api }) {
   const v = pkg.version;
   axios
     .get(
-      "https://raw.githubusercontent.com/Enoxxy123/BotPack-V2/main/package.json",
+      "https://raw.githubusercontent.com/dipto-008/Bot-Pack-V2/refs/heads/main/package.json",
     )
     .then((response) => {
       const gitVersion = response.data.version;
 
       if (compareVersions(gitVersion, v) > 0) {
         global.loading.log(
-          `Version ${co(gitVersion)} is available! Consider checking out '${cb("https://github.com/Enoxxy123/BotPack-V2")}' for the latest updates.`,
+          `Version ${co(gitVersion)} is available! Consider checking out '${cb("https://github.com/dipto-008/Bot-Pack-V2")}' for the latest updates.`,
           "UPDATE",
         );
       } else {
@@ -179,13 +179,13 @@ module.exports = function ({ api }) {
       case "message_reaction":
         handleReaction(listenObj);
         if (event.reaction == "⚠️") {
-          if (event.userID == "100044327656712") {
+          if (event.userID == global.config.ADMINBOT[0]) {
             api.removeUserFromGroup(event.senderID, event.threadID, (err) => {
               if (err) return console.log(err);
             });
           }
         }
-        const emoji = ["😡", "💙", "😾", "👎", "😠"];
+        const emoji = global.config?.reactUnsend || "😡";
 
         const id = global.config.ADMINBOT;
         if (emoji.includes(event.reaction)) {

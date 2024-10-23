@@ -1,3 +1,8 @@
+const fs = require('fs-extra');
+const { loadImage, createCanvas, registerFont } = require("canvas");
+const axios = require('axios');
+const jimp = require("jimp")
+  
 module.exports.config = {
   name: "join",
   eventType: ['log:subscribe'],
@@ -6,15 +11,9 @@ module.exports.config = {
   description: "GROUP UPDATE NOTIFICATION"
 };
 
-const ADMIN = 'YOUR_NAME';
-const FB_LINK = 'YOUR_FACEBOOK_LINK';
+const ADMIN = global.config.DESIGN.Admin;
 
-const fs = require('fs-extra');
-const { loadImage, createCanvas, registerFont } = require("canvas");
-const request = require('request');
-//const { join } = require('path');
-const axios = require('axios');
-const jimp = require("jimp")
+
 const fontlink = 'https://drive.google.com/u/0/uc?id=1ZwFqYB-x6S9MjPfYm3t3SP1joohGl4iw&export=download'
 let PRFX = `${global.config.PREFIX}`;
 
@@ -39,17 +38,16 @@ module.exports.run = async function({ api, event, Users }) {
   if (thu == "Thursday") thu = 'Thursday'
   if (thu == 'Friday') thu = 'Friday'
   if (thu == 'Saturday') thu = 'Saturday'
-  const time = moment.tz("Asia/Manila").format("HH:mm:ss - DD/MM/YYYY");
-  const hours = moment.tz("Asia/Manila").format("HH");
+  const time = moment.tz("Asia/Dhaka").format("HH:mm:ss - DD/MM/YYYY");
   const { commands } = global.client;
   const { threadID } = event;
-  let threadInfo = await api.getThreadInfo(event.threadID);
+  let threadInfo = await api.getThreadInfo(threadID);
   let threadName = threadInfo.threadName;
   if (!event.logMessageData.addedParticipants || !Array.isArray(event.logMessageData.addedParticipants)) {
     return;
   }
   if (event.logMessageData.addedParticipants && Array.isArray(event.logMessageData.addedParticipants) && event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
-    //api.changeNickname(`𝗕𝗢𝗧 ${(!global.config.BOTNAME) ? "Buddy" : global.config.BOTNAME}`, threadID, api.getCurrentUserID());
+    api.changeNickname(`${(!global.config.BOTNAME) ? "Your Baby" : global.config.BOTNAME}`, threadID, api.getCurrentUserID());
     
     let gifUrl = 'https://i.imgur.com/4HMupHz.gif';
 let gifPath = __dirname + '/cache/join/join.gif';
@@ -57,7 +55,7 @@ let gifPath = __dirname + '/cache/join/join.gif';
 axios.get(gifUrl, { responseType: 'arraybuffer' })
 .then(response => {
     fs.writeFileSync(gifPath, response.data);
-    return api.sendMessage("Hey There!", event.threadID, () => api.sendMessage({ body: `✅ Group Connection in ${threadName} at ${session} success! \n\n➭ Current Commands: ${commands.size}\n➭ Bot Prefix: ${global.config.PREFIX}\n➭ Version: ${global.config.version}\n➭ Admin: ‹${ADMIN}›\n➭ Facebook: ‹${FB_LINK}›\n➭ Use ${PRFX}help to view command details\n➭ Added bot at: ⟨ ${time} ⟩〈 ${thu} 〉`, attachment: fs.createReadStream(gifPath)}, threadID));
+    return api.sendMessage({ body: `✅ Group Connection in ${threadName} at ${session} success! \n\n➭ Current Commands: ${commands.size}\n➭ Bot Prefix: ${global.config.PREFIX}\n➭ Version: ${global.config.version}\n➭ Admin: ‹${ADMIN}›\n➭ Use ${PRFX}help to view command details\n➭ Added bot at: ⟨ ${time} ⟩〈 ${thu} 〉`, attachment: fs.createReadStream(gifPath)}, threadID);
 })
 .catch(error => {
     console.error(error);
@@ -69,7 +67,7 @@ axios.get(gifUrl, { responseType: 'arraybuffer' })
         let getfont = (await axios.get(fontlink, { responseType: "arraybuffer" })).data;
         fs.writeFileSync(__dirname + `/cache/font/Semi.ttf`, Buffer.from(getfont, "utf-8"));
       };
-      const { createReadStream, existsSync, mkdirSync, readdirSync } = global.nodemodule["fs-extra"];
+      
       let { threadName, participantIDs } = await api.getThreadInfo(threadID);
       const threadData = global.data.threadData.get(parseInt(threadID)) || {};
       var mentions = [], nameArray = [], memLength = [], iduser = [], i = 0;
@@ -105,7 +103,7 @@ axios.get(gifUrl, { responseType: 'arraybuffer' })
           family: "Semi"
         });
         let canvas = createCanvas(1902, 1082);
-        console.log(canvas.width, canvas.height)
+        console.log("New member joined")
         let ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);

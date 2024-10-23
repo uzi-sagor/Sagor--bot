@@ -212,6 +212,7 @@ function buildAPI(globalOptions, html, jar) {
     'resolvePhotoUrl',
     'searchForThread',
     'sendMessage',
+    'shareContact',
     'sendTypingIndicator',
     'setMessageReaction',
     'setPostReaction',

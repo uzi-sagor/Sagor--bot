@@ -96,7 +96,18 @@ module.exports.downloadFile = async function(url, path) {
     writer.on('error', reject);
   });
 };
-
+module.exports.getStreamFromURL= async function(url, path) {
+   if (!url || typeof url !== "string")
+            throw new Error(`The first argument (url) must be a string`);
+  try {
+    const response = await axios.get(url, { responseType: "stream" });
+    const ext = response.headers["content-type"]?.split("/")[1] || "dat";
+    response.data.path = path || `test.${ext}`;
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports.getContent = async function(url) {
   try {
     const response = await axios({
