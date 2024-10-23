@@ -159,9 +159,9 @@ Go to your `config.json` and set it in the language property:
 - Embrace the world of possibilities with [BotPack](https://replit.com/@YanMaglinte/BotPack)🌀 - a facebook Messenger file designed to make your interaction with messenger bots smoother and more efficient.
 ---
 <div align="center">
-      <h3>Author: </h3>
+      <h1>Author: </h1>
       <h3>YanMaglinte🔥</h3>
-        <br> <h1> Dipto (modifier)n/h1>     
+<br> <h3> Dipto (modifier)n</h3>     
      </div>
 
 - If you encounter any issues or have questions related to this REPL, please don't hesitate to reach out on Facebook!
