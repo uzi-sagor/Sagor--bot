@@ -31,7 +31,7 @@ module.exports.run = async function({ event, api, Threads, Users }) {
   if (author === threadID) return;
 
   try {
-    let dataThread = (await getData(threadID)).threadInfo;
+    let dataThread = (await getData(threadID));
 
     switch (logMessageType) {
       case "log:thread-admins": {
@@ -125,7 +125,7 @@ module.exports.run = async function({ event, api, Threads, Users }) {
       }
     }
 
-    await setData(threadID, { threadInfo: dataThread });
+    await setData(threadID, dataThread);
   } catch (error) {
     console.log(error);
   }

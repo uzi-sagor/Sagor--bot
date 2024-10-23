@@ -385,7 +385,7 @@ function onBot() {
             !command.includes("example") &&
             !global.config.commandDisabled.includes(command),
         );
-        console.log(cv(`\n` + `──LOADING COMMANDS─●`));
+        console.log(cv(`\n` + `●──LOADING COMMANDS──●`));
 
         for (const command of listCommand) {
           try {
@@ -521,7 +521,7 @@ global.client.commands.set(config.name, module);
           (ev) =>
             ev.endsWith(".js") && !global.config.eventDisabled.includes(ev),
         );
-        console.log(cv(`\n` + `──LOADING EVENTS─●`));
+        console.log(cv(`\n` + `●──LOADING EVENTS──●`));
         for (const ev of events) {
           try {
             const event = require(
@@ -619,7 +619,7 @@ global.client.commands.set(config.name, module);
           }
         }
       })();
-    console.log(cv(`\n` + `──BOT START─● `));
+    console.log(cv(`\n` + `●──BOT START──● `));
     global.loading.log(
       `${cra(`[ SUCCESS ]`)} Loaded ${cb(`${global.client.commands.size}`)} commands and ${cb(`${global.client.events.size}`)} events successfully`,
       "LOADED",
@@ -655,7 +655,7 @@ global.client.commands.set(config.name, module);
 
 (async () => {
   try {
-    console.log(cv(`\n` + `──DATABASE─●`));
+    console.log(cv(`\n` + `●──DATABASE──●`));
     global.loading.log(
       `${cra(`[ CONNECT ]`)} Connected to JSON database successfully!`,
       "DATABASE",
@@ -668,8 +668,3 @@ global.client.commands.set(config.name, module);
     );
   }
 })();
-
-/* *
-This bot was created by me (CATALIZCS) and my brother SPERMLORD. Do not steal my code. (つ ͡ ° ͜ʖ ͡° )つ ✄ ╰⋃╯
-This file was modified by me (@YanMaglinte). Do not steal my credits. (つ ͡ ° ͜ʖ ͡° )つ ✄ ╰⋃╯
-* */

@@ -1,240 +1,113 @@
 module.exports = function ({ api }) {
-    const { writeFileSync } = require("fs-extra");
-    var path = __dirname + "/data/usersData.json";
-
-    try {
-        var usersData = require(path)
-    } catch {
-        writeFileSync(path, "{}", { flag: 'a+' });
+    const fs = require("fs");
+    const path = __dirname + "/data/usersData.json";
+    function loadDatabase() {
+        if (!fs.existsSync(path)) {
+            fs.writeFileSync(path, "[]");
+        }
+        const rawData = fs.readFileSync(path);
+        return JSON.parse(rawData);
+    }
+    function saveDatabase(data) {
+        fs.writeFileSync(path, JSON.stringify(data, null, 2));
     }
 
-    async function saveData(data) {
-        try {
-            if (!data) throw new Error('Data cannot be left blank');
-            writeFileSync(path, JSON.stringify(data, null, 4))
-            return true
-        } catch (error) {
-            return false
-        }
+    // Find a user by userID //
+    function findUser(data, userID) {
+        return data.find((user) => user.userID === userID);
     }
 
-    async function getInfo(id) {
-        return (await api.getUserInfo(id))[id];
+// Get information for a specific user by ID
+    function getInfo(userID) {
+        const data = loadDatabase();
+        return findUser(data, userID) || null;
     }
 
-    async function getNameUser(userID) {
-        try {
-            if (!userID) throw new Error("User ID cannot be blank");
-            if (isNaN(userID)) throw new Error("Invalid user ID");
-            var userInfo = await api.getUserInfo(userID);
-            return `User ID: ${userInfo}`;
-        } catch (error) {
-            return `Facebook users`
-        }
+    //--- Get a user's name by ID --//
+    function getNameUser(userID) {
+        const user = getInfo(userID);
+        return user ? user.name : "Facebook user";
     }
 
-    async function getUserFull(id) {
-        var resolveFunc = function () { };
-        var rejectFunc = function () { };
-        var returnPromise = new Promise(function (resolve, reject) {
-            resolveFunc = resolve;
-            rejectFunc = reject;
-        });
-        try {
-            api.httpGet(`https://graph.facebook.com/${id}?fields=email,about,birthday,link&access_token=${global.account.accessToken}`, (e, i) => {
-                if (e) return rejectFunc(e)
-                var t = JSON.parse(i);
-                var dataUser = {
-                    error: 0,
-                    author: 'D-Jukie',
-                    data: {
-                        uid: t.id || null,
-                        about: t.about || null,
-                        link: t.link || null,
-                        imgavt: `https://graph.facebook.com/${t.id}/picture?height=1500&width=1500&access_token=1073911769817594|aa417da57f9e260d1ac1ec4530b417de`
-                    }
-                };
-                return resolveFunc(dataUser)
-            });
-            return returnPromise
-        } catch (error) {
-            return resolveFunc({
-                error: 1,
-                author: 'D-Jukie',
-                data: {}
-            })
-        }
+    //---- Get all users' data ----//
+    function getAll() {
+        return loadDatabase();
+    }
+//--- Get specific data from a user by ID --//
+    function getData(userID, key) {
+        const user = getInfo(userID);
+        return user && user.data[key] ? user.data[key] : null;
     }
 
-    async function getAll(keys, callback) {
-        try {
-            if (!keys) {
-                if (Object.keys(usersData).length == 0) return [];
-                else if (Object.keys(usersData).length > 0) {
-                    var db = [];
-                    for (var i of Object.keys(usersData)) db.push(usersData[i]);
-                    return db;
-                }
-            }
-            if (!Array.isArray(keys)) throw new Error("The input parameter must be an array");
-            const data = [];
-            for (var userID in usersData) {
-                var database = {
-                    ID: userID
-                };
-                var userData = usersData[userID];
-                for (var i of keys) database[i] = userData[i];
-                data.push(database);
-            }
-            if (callback && typeof callback == "function") callback(null, data);
-            return data;
-        } catch (error) {
-            if (callback && typeof callback == "function") callback(error, null);
-            return false
-        }
+ //--- Set specific data for a user --//
+    function setData(userID, key, value) {
+        const data = loadDatabase();
+        const user = findUser(data, userID);
+        if (!user) return false;
+
+        const updates = typeof key === 'object' ? key : { [key]: value };
+        Object.entries(updates).forEach(([k, v]) => setNestedProperty(user, k, v));
+
+        user.updatedAt = new Date().toISOString();
+        saveDatabase(data);
+        return true;
     }
 
-    async function getData(userID, callback) {
-        try {
-            if (!userID) throw new Error("User ID cannot be blank");
-            if (isNaN(userID)) throw new Error("Invalid user ID");
-            if (!usersData.hasOwnProperty(userID)) await createData(userID, (error, info) => {
-                return info;
-            });
-            const data = usersData[userID];
-            if (callback && typeof callback == "function") callback(null, data);
-            return data;
-        } catch (error) {
-            if (callback && typeof callback == "function") callback(error, null);
-            return false
-        }
+    function setNestedProperty(obj, key, value) {
+        key.split('.').reduce((acc, cur, idx, arr) => {
+            return acc[cur] = idx === arr.length - 1 ? value : acc[cur] || {};
+        }, obj);
     }
 
-    async function setData(userID, options, callback) {
-        try {
-            if (!userID) throw new Error("User ID cannot be blank");
-            if (isNaN(userID)) throw new Error("Invalid user ID");
-            if (!userID) throw new Error("userID cannot be empty");
-            if (global.config.autoCreateDB) {
-                if (!usersData.hasOwnProperty(userID)) throw new Error(`User ID: ${userID} does not exist in Database`);
-            }
-            if (typeof options != 'object') throw new Error("The options parameter passed must be an object");
-            usersData[userID] = { ...usersData[userID], ...options };
-            await saveData(usersData);
-            if (callback && typeof callback == "function") callback(null, dataUser[userID]);
-            return usersData[userID];
-        } catch (error) {
-            if (callback && typeof callback == "function") callback(error, null);
-            return false
-        }
+//-- Delete specific data from a user --//
+    function delData(userID, key) {
+        const data = loadDatabase();
+        const user = findUser(data, userID);
+        if (!user || !user.data[key]) return false;
+
+        delete user[key];
+        user.updatedAt = new Date().toISOString();
+        saveDatabase(data);
+        return true;
     }
 
-    async function delData(userID, callback) {
-        try {
-            if (!userID) throw new Error("User ID cannot be blank");
-            if (isNaN(userID)) throw new Error("Invalid user ID");
-            if (global.config.autoCreateDB) {
-                if (!usersData.hasOwnProperty(userID)) throw new Error(`User ID: ${userID} does not exist in Database`);
-            }
-            delete usersData[userID];
-            await saveData(usersData);
-            if (callback && typeof callback == "function") callback(null, usersData);
-            return usersData;
-        } catch (error) {
-            if (callback && typeof callback == "function") callback(error, null);
-            return false
-        }
-    }
+//--Create a new user entry in the database-//
+    async function createData(senderID) {
+        const data = loadDatabase();
+        const userInfo = await api.getUserInfo(senderID);
+        const user = userInfo[senderID];
 
-    async function getName(userID, checkData = true) {
-        if (isNaN(userID)) {
-            throw new CustomError({
-                name: "INVALID_USER_ID",
-                message: `The first argument (userID) must be a number, not ${typeof userID}`
-            });
+        if (!findUser(data, senderID)) {
+            const newUser = {
+                userID: senderID,
+                name: user.name || "Unknown", 
+                gender: user.gender,
+                vanity: user.vanity || "",
+                exp: 0,
+                money: 0,
+                banned: {},
+                settings: {},
+                data: {},
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+            };
+            data.push(newUser);
+            saveDatabase(data);
+            return true;
         }
-
-        if (checkData)
-            return getNameInDB(userID);
-
-        try {
-            const user = await axios.post(`https://www.facebook.com/api/graphql/?q=${`node(${userID}){name}`}`);
-            return user.data[userID].name;
-        }
-        catch (error) {
-            return getNameInDB(userID);
-        }
-    }
-
-    async function getAvatarUrl(userID) {
-        if (isNaN(userID)) {
-            throw new CustomError({
-                name: "INVALID_USER_ID",
-                message: `The first argument (userID) must be a number, not ${typeof userID}`
-            });
-        }
-        try {
-            const user = await axios.post(`https://www.facebook.com/api/graphql/`, null, {
-                params: {
-                    doc_id: "5341536295888250",
-                    variables: JSON.stringify({ height: 500, scale: 1, userID, width: 500 })
-                }
-            });
-            return user.data.data.profile.profile_picture.uri;
-        }
-        catch (err) {
-            return "https://i.ibb.co/bBSpr5v/143086968-2856368904622192-1959732218791162458-n.png";
-        }
-    };
-    function getNameInDB(userID) {
-        const userData = global.data.allUserID.find(u => u.userID == userID);
-        if (userData)
-            return userData.name;
-        else
-            return null;
-    }
-    
-    async function createData(userID, callback) {
-        try {
-            if (!userID) throw new Error("User ID cannot be blank");
-            if (isNaN(userID)) throw new Error("Invalid user ID");
-            var userInfo = await getInfo(userID);
-            if (usersData.hasOwnProperty(userID)) return false
-            var data = {
-                [userID]: {
-                    userID: userID,
-                    money: 0,
-                    exp: 0,
-                    createTime: {
-                        timestamp: Date.now()
-                    },
-                    data: {
-                        timestamp: Date.now()
-                    },
-                    lastUpdate: Date.now()
-                }
-            }
-            Object.assign(usersData, data);
-            await saveData(usersData);
-            if (callback && typeof callback == "function") callback(null, data);
-            return data;
-        } catch (error) {
-            if (callback && typeof callback == "function") callback(error, null);
-            return false
-        }
+        return false;
     }
 
     return {
         getInfo,
+        get:getInfo,
         getNameUser,
-        getName,
-        getAvatarUrl,
+        getName:getNameUser,
         getAll,
         getData,
         setData,
-        getNameInDB,
+        set:setData,
         delData,
         createData,
-        getUserFull
     };
 };
