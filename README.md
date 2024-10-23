@@ -1,4 +1,4 @@
-# BotPack🤖<sub><sub>v1.7.6🚀</sub></sub>
+# BotPack🤖<sub><sub>v2.0.0🚀</sub></sub>
 <p align="center">
 	<a href="https://nodejs.org/dist/v16.20.0">
 		<img src="https://img.shields.io/badge/Nodejs%20Support-18.x-brightgreen.svg?style=flat-square" alt="Nodejs Support v18.x">
@@ -53,6 +53,10 @@ By setting this to false, some commands like checktt, rankup and other commands 
   - Added sharecontact.js
   - Bug fixed!
   - HandleReply.js issue fixed!
+  - Fixed FCA Issue.
+  - Added Coustom functions.
+  - Removed box and added message.
+  - Fixed all issues and updated database.
 </details>
 
 <details>
@@ -155,14 +159,12 @@ Go to your `config.json` and set it in the language property:
 - Embrace the world of possibilities with [BotPack](https://replit.com/@YanMaglinte/BotPack)🌀 - a facebook Messenger file designed to make your interaction with messenger bots smoother and more efficient.
 ---
 <div align="center">
-      <h3>My Replit Account:
-      <a href="https://replit.com/@YanMaglinte" style="color: green;"><br>@YanMaglinte🔥</a>
-        <br>
-        My Facebook Account:<a href="https://www.facebook.com/yandeva.me?mibextid=b06tZ0" style="color: green;"><br>Yan🚀</a></h3></div>
+      <h1>Author: </h1>
+      <h3>YanMaglinte🔥</h3>
+      <h3> Dip To (modifier)</h3>     
+     </div>
 
-- If you encounter any issues or have questions related to this REPL, please don't hesitate to reach out to me on Facebook. I'm here to assist you!
-
-<img align="center" src="https://i.ibb.co/pnm38zY/yanmaglinte.png"/>
+- If you encounter any issues or have questions related to this REPL, please don't hesitate to reach out on Facebook!
 
 ### **HOW TO START USING BOTPACK?**
 
@@ -189,9 +191,7 @@ Special thanks to the following fellows for their amazing projects making this m
 - NTKhang03
 - KhangGia1810
 - XaviaTeam
-<br><br> __In collaboration with__
-  - [Liane Cagara 🎀](https://www.facebook.com/nealiana.kaye.cagara?mibextid=ZbWKwL)
-
+<br>
 _Updated on: May 12, 2024 (PST)<br>Creation Date: June 11, 2023_
 
 ---
