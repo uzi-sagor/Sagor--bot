@@ -153,8 +153,12 @@ module.exports = function ({ api }) {
         getInfo,
         getAll,
         getData,
+        get:getData,
         setData,
+        set:setData,
         delData,
-        createData
+        del:delData,
+        createData,
+        create:createData
     };
 };

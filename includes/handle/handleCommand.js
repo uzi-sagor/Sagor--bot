@@ -17,12 +17,12 @@ module.exports = function ({ api, models, Users, Threads, Currencies, ...rest })
     const { commands,aliases, cooldowns } = global.client;
 
     var { body, senderID, threadID, messageID } = event;
-    var senderID = String(senderID),
-      threadID = String(threadID);
+    //var senderID = String(senderID)
+    //  threadID = String(threadID);
     
     if(!body) return;
     
-    const threadSetting = threadData.get(threadID) || {};
+    const threadSetting = Threads.get(threadID) || {};
     
 const prefix = threadSetting?.prefix || PREFIX
  const isPrefix = body.startsWith(prefix);
@@ -203,8 +203,7 @@ const args = isPrefix ? body.slice(prefix.length).trim().split(/\s+/): body.trim
     var threadInfo2;
     if (event.isGroup == !![])
       try {
-        threadInfo2 =
-          threadInfo.get(threadID) || (await Threads.getInfo(threadID));
+        threadInfo2 = await Threads.get(threadID) || (await Threads.getInfo(threadID));
         if (Object.keys(threadInfo2).length == 0) throw new Error();
       } catch (err) {
         logger.log(
@@ -213,8 +212,7 @@ const args = isPrefix ? body.slice(prefix.length).trim().split(/\s+/): body.trim
       }
 
     var permssion = 0;
-    var threadInfoo =
-      threadInfo.get(threadID) || (await Threads.getInfo(threadID));
+    var threadInfoo = (await Threads.get(threadID));
     const find = threadInfoo.adminIDs.find((el) => el.id == senderID);
     if (ADMINBOT.includes(senderID)) permssion = 2;
     else if (!ADMINBOT.includes(senderID) && find) permssion = 1;

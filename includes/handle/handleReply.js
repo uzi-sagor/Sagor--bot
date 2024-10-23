@@ -1,15 +1,33 @@
 module.exports = function ({ api, models, Users, Threads, Currencies, ...rest }) {
-    return function ({ event, ...rest2 }) {
+    return async function ({ event, ...rest2 }) {
         if (!event.messageReply) return;
-        const { handleReply, commands } = global.client
-        const { messageID, threadID, messageReply } = event;
+        const { handleReply, commands } = global.client;
+    const { ADMINBOT } = global.config 
+        const { senderID, messageID, threadID, messageReply } = event;
         if (handleReply.length !== 0) {
             const indexOfHandle = handleReply.findIndex(e => e.messageID == messageReply.messageID);
             if (indexOfHandle < 0) return;
             const indexOfMessage = handleReply[indexOfHandle];
-            const handleNeedExec = commands.get(indexOfMessage.name);
+            const handleNeedExec = commands.get(indexOfMessage.name) || commands.get(indexOfMessage.commadName);
             if (!handleNeedExec) return api.sendMessage(global.getText('handleReply', 'missingValue'), threadID, messageID);
             try {
+                var permssion = 0;
+                var threadInfoo = (await Threads.get(threadID));
+                const find = threadInfoo.adminIDs.find((el) => el.id == senderID);
+                if (ADMINBOT.includes(senderID)) permssion = 2;
+                else if (!ADMINBOT.includes(senderID) && find) permssion = 1;
+                if (
+                    handleNeedExec &&
+                    handleNeedExec.config &&
+                    handleNeedExec.config.hasPermssion &&
+                    handleNeedExec.config.hasPermssion > permssion
+                ) {
+                  return api.sendMessage("❌ | You Don't have enough permission to reply this message",
+                    event.threadID,
+                    event.messageID,
+                  );
+                }
+                
                 var getText2;
                 if (handleNeedExec.languages && typeof handleNeedExec.languages == 'object') 
                 	getText2 = (...value) => {

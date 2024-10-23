@@ -108,6 +108,8 @@ module.exports = function ({ api }) {
         setData,
         set:setData,
         delData,
+        del:delData,
         createData,
+        create:createData
     };
 };
