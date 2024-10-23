@@ -76,7 +76,7 @@ module.exports.run = async function ({ api, event, args, getText }) {
 
   if (!command) {
     const commandList = Array.from(commands.values());
-    const categories = new Set(commandList.map((cmd) => cmd.config.commandCategory.toLowerCase()));
+    const categories = new Set(commandList.map((cmd) => cmd.config?.commandCategory?.toLowerCase() || cmd.config?.category?.toLowerCase() || "unknown"));
     const categoryCount = categories.size;
 
     const categoryNames = Array.from(categories);
