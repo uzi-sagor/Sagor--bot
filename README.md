@@ -161,7 +161,7 @@ Go to your `config.json` and set it in the language property:
 <div align="center">
       <h1>Author: </h1>
       <h3>YanMaglinte🔥</h3>
-<br> <h3> Dipto (modifier)n</h3>     
+      <h3> Dip To (modifier)</h3>     
      </div>
 
 - If you encounter any issues or have questions related to this REPL, please don't hesitate to reach out on Facebook!
