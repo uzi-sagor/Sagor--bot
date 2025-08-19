@@ -82,7 +82,7 @@ module.exports = function ({ api }) {
   const v = pkg.version;
   axios
     .get(
-      "https://raw.githubusercontent.com/uzi-sagor/Upgrade-/master/package.json",
+      "https://raw.githubusercontent.com/Uzi-SaGor-01/sagor-bot-x/main/package.json",
     )
     .then((response) => {
       const gitVersion = response.data.version;
