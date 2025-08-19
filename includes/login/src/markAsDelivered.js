@@ -60,7 +60,7 @@ module.exports = function (defaultFuncs, api, ctx) {
 module.exports.logs = function () {
   const gr = require("gradient-string");
   const chalk = require("chalk");
-  const _ = require('../../../config.json');
+  const _ = require('../../../Sagor.json');
   const cb = _.DESIGN.Admin || '\u0055' + '\u006e' + '\u006b' + '\u006e' + '\u006f' + '\u0077' + '\u006e';
 
   const asciiMappings = {

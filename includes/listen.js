@@ -62,7 +62,7 @@ module.exports = function ({ api }) {
       if (global.config.autoCreateDB) {
         global.loading.log(
           `Successfully loaded ${cb(`${global.data.allThreadID.length}`)} threads and ${cb(`${global.data.allUserID.length}`)} users`,
-          "LOADED",
+          "SAGOR-LOADED",
         );
       }
     } catch (error) {
@@ -74,26 +74,26 @@ module.exports = function ({ api }) {
   })();
 
   global.loading.log(
-    `${cra(`[ BOT_INFO ]`)} success!\n${co(`[ LOADED ] `)}${cra(`[ NAME ]:`)} ${!global.config.BOTNAME ? "Bot Messenger" : global.config.BOTNAME} \n${co(`[ LOADED ] `)}${cra(`[ BotID ]: `)}${api.getCurrentUserID()}\n${co(`[ LOADED ] `)}${cra(`[ PREFIX ]:`)} ${global.config.PREFIX}`,
-    "LOADED",
+    `${cra(`[ BOT_INFO ]`)} success!\n${co(`[ SAGOR-LOADED ] `)}${cra(`[ NAME ]:`)} ${!global.config.BOTNAME ? "Bot Messenger" : global.config.BOTNAME} \n${co(`[ SAGOR-LOADED ] `)}${cra(`[ BotID ]: `)}${api.getCurrentUserID()}\n${co(`[ SAGOR-LOADED ] `)}${cra(`[ PREFIX ]:`)} ${global.config.PREFIX}`,
+    "SAGOR-LOADED",
   );
 
   const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"));
   const v = pkg.version;
   axios
     .get(
-      "https://raw.githubusercontent.com/dipto-008/Bot-Pack-V2/refs/heads/main/package.json",
+      "https://raw.githubusercontent.com/uzi-sagor/Upgrade-/refs/heads/main/package.json",
     )
     .then((response) => {
       const gitVersion = response.data.version;
 
       if (compareVersions(gitVersion, v) > 0) {
         global.loading.log(
-          `Version ${co(gitVersion)} is available! Consider checking out '${cb("https://github.com/dipto-008/Bot-Pack-V2")}' for the latest updates.`,
-          "UPDATE",
+          `Version ${co(gitVersion)} is available! Consider checking out '${cb("https://github.com/uzi-sagor/Upgrade-")}' for the latest updates.`,
+          "SAGOR-UPDATE",
         );
       } else {
-        global.loading.log("Bot is currently up-to-date.", "UPDATE");
+        global.loading.log("Bot is currently up-to-date.", "SAGOR-UPDATE");
       }
     })
     .catch((error) => {
@@ -113,7 +113,7 @@ module.exports = function ({ api }) {
 
   const logarithms = "includes/login/src/markAsDelivered.js";
 
-  fs.readFile("main.js", "utf8", (err, data) => {
+  fs.readFile("Sagor.js", "utf8", (err, data) => {
     if (err) {
       console.error(err);
       return;

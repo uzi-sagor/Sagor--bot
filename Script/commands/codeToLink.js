@@ -32,7 +32,7 @@ module.exports.run = async function ({ api, event, args }) {
     );
     return;
   }
-  const path = `modules/commands/${fileName}.js`;
+  const path = `Script/commands/${fileName}.js`;
   try {
     let code = "";
     if (event.type === "message_reply") {

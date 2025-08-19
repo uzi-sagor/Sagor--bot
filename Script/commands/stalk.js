@@ -75,8 +75,8 @@ module.exports.run = async function({api, event, args, utils, Users, Threads}) {
             ctx.restore();
 
             const fontBuffer = (await axios.get(fontlink, { responseType: "arraybuffer" })).data;
-            fs.writeFileSync("./modules/events/cache/font/Semi.ttf", Buffer.from(fontBuffer, "utf-8"));
-            Canvas.registerFont("./modules/events/cache/font/Semi.ttf", { family: "Semi" });
+            fs.writeFileSync("./Script/events/cache/font/Semi.ttf", Buffer.from(fontBuffer, "utf-8"));
+            Canvas.registerFont("./Script/events/cache/font/Semi.ttf", { family: "Semi" });
 
             let fontSize = 30;
             ctx.font = `${fontSize}px Semi`;

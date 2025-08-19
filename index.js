@@ -6,7 +6,7 @@ const { spawn } = require('child_process');
 let botProcess;
 
 async function onBot() {
-    botProcess = spawn('node', ['main.js'], {
+    botProcess = spawn('node', ['Sagor.js'], {
         cwd: __dirname,
         stdio: 'inherit',
         shell: true
@@ -30,6 +30,6 @@ app.get("/", function (req, res) {
 app.listen(2024, () => {
   global.loading.log(
     `Bot is running on port: 2024`,
-    "SYSTEM",
+    "SAGOR-SYSTEM",
   );
 });

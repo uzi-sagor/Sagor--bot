@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const gradient = require('gradient-string');
-const con = require('./../config.json');
+const con = require('./../Sagor.json');
 
 function getThemeColors() {
   const theme = con.DESIGN.Theme;
@@ -128,10 +128,10 @@ module.exports = {
   log: (text, type) => {
     switch (type) {
       case 'warn':
-        process.stderr.write(getThemeColors().error(`\r[ ERROR ] `) + text + '\n');
+        process.stderr.write(getThemeColors().error(`\r[ SAGOR-ERROR ] `) + text + '\n');
         break;
       case 'error':
-        console.log(chalk.bold.hex("#ff0000").bold(`[ ERROR ] `) + text + '\n');
+        console.log(chalk.bold.hex("#ff0000").bold(`[ SAGOR-ERROR ] `) + text + '\n');
         break;
       case 'load':
         console.log(getThemeColors().co(`[ NEW USER ] `) + text + '\n');
@@ -153,13 +153,13 @@ module.exports = {
   loader: (data, option) => {
     switch (option) {
       case 'warn':
-        process.stderr.write(getThemeColors().co(`[ SYSTEM ]`), data + '\n');
+        process.stderr.write(getThemeColors().co(`[ SAGOR-SYSTEM ]`), data + '\n');
         break;
       case 'error':
-        process.stderr.write(chalk.hex("#ff0000")(`\r[ SYSTEM ] `) + data + '\n');
+        process.stderr.write(chalk.hex("#ff0000")(`\r[ SAGOR-SYSTEM ] `) + data + '\n');
         break;
       default:
-        console.log(getThemeColors().co(`[ SYSTEM ]`), data);
+        console.log(getThemeColors().co(`[ SAGOR-SYSTEM ]`), data);
         break;
     }
   }

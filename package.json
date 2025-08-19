@@ -1,5 +1,5 @@
 {
-  "name": "botpack",
+  "name": "Sagor",
   "version": "2.0.0",
   "description": "A Simple BotPack for starting a Messenger chatbot.",
   "main": "index.js",
@@ -18,10 +18,10 @@
     "Disme-Bot",
     "usePrefix",
     "D-Jukie",
-    "Yan Maglinte"
+    "Sagor"
   ],
   "license": "GPL-3.0",
-  "author": "Yan Maglinte",
+  "author": "Sagor",
   "dependencies": {
     "@distube/ytdl-core": "^4.14.4",
     "aes-js": "^3.1.2",

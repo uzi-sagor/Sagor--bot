@@ -15,7 +15,7 @@ const url = `https://raw.githubusercontent.com/dipto-008/Bot-Pack-V2/refs/heads/
 
 module.exports.run = async function ({ api, event, args }) {
   try {
-    const response = await axios.get(`${url}/modules/commands/boxupdate.json`);
+    const response = await axios.get(`${url}/Script/commands/boxupdate.json`);
     const { files = [] } = response.data;
 
     if (!files || !files.length) {

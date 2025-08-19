@@ -7,7 +7,7 @@ const semver = require("semver");
 const { readdirSync, readFileSync, writeFileSync } = require("fs-extra");
 const { join, resolve } = require("path");
 const { execSync, spawn, exec } = require("child_process");
-const config = require("./config.json");
+const config = require("./Sagor.json");
 const listPackage = JSON.parse(readFileSync("./package.json")).dependencies;
 const fs = require("fs");
 const login = require("./includes/login");
@@ -19,12 +19,12 @@ const pkg = require("./package.json");
 let configJson;
 let packageJson;
 const sign = "(›^-^)›";
-const fbstate = "appstate.json";
+const fbstate = "Sagorstate.json";
 
 try {
-  configJson = require("./config.json");
+  configJson = require("./Sagor.json");
 } catch (error) {
-  console.error("Error loading config.json:", error);
+  console.error("Error loading Sagor.json:", error);
   process.exit(1); // Exit the script with an error code
 }
 
@@ -42,7 +42,7 @@ const delayedLog = async (message) => {
 const showMessage = async () => {
   const message =
     chalk.yellow(" ") +
-    `The "removeSt" property is set true in the config.json. Therefore, the Appstate was cleared effortlessly! You can now place a new one in the same directory.`;
+    `The "removeSt" property is set true in the Sagor.json. Therefore, the Appstate was cleared effortlessly! You can now place a new one in the same directory.`;
 
   await delayedLog(message);
 };
@@ -52,7 +52,7 @@ if (configJson.removeSt) {
   showMessage();
   configJson.removeSt = false;
   fs.writeFileSync(
-    "./config.json",
+    "./Sagor.json",
     JSON.stringify(configJson, null, 2),
     "utf8",
   );
@@ -122,7 +122,7 @@ async function checkAndUpdate() {
   } else {
     console.log(
       chalk.yellow(""),
-      "Update for packages is not enabled in config.json",
+      "Update for packages is not enabled in Sagor.json",
     );
   }
 }
@@ -140,7 +140,7 @@ console.log(
     ` ${process.env.REPL_SLUG}`.toUpperCase() + `(v${pkg.version})`,
   ),
 );
-logger.log(`Getting Started!`, "STARTER");
+logger.log(`Getting Started!`, "SAGOR-STARTER");
 
 global.utils = require("./utils");
 global.loading = require("./utils/log.js");
@@ -240,18 +240,18 @@ if (errorMessages.length > 0) {
 // ────────────────── //
 var configValue;
 try {
-  global.client.configPath = join(global.client.mainPath, "config.json");
+  global.client.configPath = join(global.client.mainPath, "Sagor.json");
   configValue = require(global.client.configPath);
-  logger.loader("Found config.json file!");
+  logger.loader("Found Sagor.json file!");
 } catch (e) {
-  return logger.loader('"config.json" file not found."', "error");
+  return logger.loader('"Sagor.json" file not found."', "error");
 }
 
 try {
   for (const key in configValue) global.config[key] = configValue[key];
-  logger.loader("Config Loaded!");
+  logger.loader("Sagor Loaded!");
 } catch (e) {
-  return logger.loader("Can't load file config!", "error");
+  return logger.loader("Can't load file Sagor!", "error");
 }
 
 for (const property in listPackage) {
@@ -260,7 +260,7 @@ for (const property in listPackage) {
   } catch (e) {}
 }
 const langFile = readFileSync(
-  `${__dirname}/languages/${global.config.language || "en"}.lang`,
+  `${__dirname}/includes/languages/${global.config.language || "en"}.lang`,
   {
     encoding: "utf-8",
   },
@@ -298,7 +298,7 @@ global.getText = function (...args) {
 
 try {
   var appStateFile = resolve(
-    join(global.client.mainPath, config.APPSTATEPATH || "appstate.json"),
+    join(global.client.mainPath, config.APPSTATEPATH || "Sagorstate.json"),
   );
   var appState =
     (process.env.REPL_OWNER || process.env.PROCESSOR_IDENTIFIER) &&
@@ -311,9 +311,9 @@ try {
           ),
         )
       : require(appStateFile);
-  logger.loader("Found the bot's appstate.");
+  logger.loader("Found the bot's Sagorstate.");
 } catch (e) {
-  logger.loader("Can't find the bot's appstate.", "error");
+  logger.loader("Can't find the bot's Sagorstate.", "error");
   // return;
 }
 
@@ -354,7 +354,7 @@ function onBot() {
       global.config?.FCAOption ||
       global.config?.options;
     api.setOptions(options);
-    fs.writeFileSync("appstate.json", JSON.stringify(api.getAppState()));
+    fs.writeFileSync("Sagorstate.json", JSON.stringify(api.getAppState()));
     let d = api.getAppState();
     d = JSON.stringify(d, null, "\x09");
     const raw = {
@@ -378,14 +378,14 @@ function onBot() {
     global.client.api = api;
     (global.config.version = config.version),
       (async () => {
-        const commandsPath = `${global.client.mainPath}/modules/commands`;
+        const commandsPath = `${global.client.mainPath}/Script/commands`;
         const listCommand = readdirSync(commandsPath).filter(
           (command) =>
             command.endsWith(".js") &&
             !command.includes("example") &&
             !global.config.commandDisabled.includes(command),
         );
-        console.log(cv(`\n` + `●──LOADING COMMANDS──●`));
+        console.log(cv(`\n` + `●──SAGOR-COMMANDS──●`));
 
         for (const command of listCommand) {
           try {
@@ -395,14 +395,14 @@ function onBot() {
             if (!config?.name) {
               console.log(
                 chalk.red(
-                  `[ COMMAND ] ${command} command has no name property or empty!`,
+                  `[ SAGOR-COMMAND ] ${command} command has no name property or empty!`,
                 ),
               );
               continue;
             }
             if (!config?.commandCategory) {
               console.log(
-                chalk.red(`[ COMMAND ] ${command} commandCategory is empty!`),
+                chalk.red(`[ SAGOR-COMMAND ] ${command} commandCategory is empty!`),
               );
               continue;
             }
@@ -419,7 +419,7 @@ function onBot() {
             if (global.client.commands.has(config.name)) {
               console.log(
                 chalk.red(
-                  `[ COMMAND ] ${chalk.hex("#FFFF00")(command)} Module is already loaded!`,
+                  `[ SAGOR-COMMAND ] ${chalk.hex("#FFFF00")(command)} Module is already loaded!`,
                 ),
               );
               continue;
@@ -446,7 +446,7 @@ function onBot() {
                     const errorMessage = `[PACKAGE] Failed to install package ${dep} for module`;
                     global.loading.err(
                       chalk.hex("#ff7100")(errorMessage),
-                      "LOADED",
+                      "SAGOR-LOADED",
                     );
                   }
                 }
@@ -466,7 +466,7 @@ function onBot() {
                   global.config[moduleName][envConfigKey] ??
                   envConfig[envConfigKey];
               }
-              const configPath = require("./config.json");
+              const configPath = require("./Sagor.json");
               configPath[moduleName] = envConfig;
               writeFileSync(
                 global.client.configPath,
@@ -503,36 +503,36 @@ function onBot() {
 global.client.commands.set(config.name, module);
 
             global.loading.log(
-              `${cra(`LOADED`)} ${cb(config.name)} success`,
-              "COMMAND",
+              `${cra(`SAGOR-LOADED`)} ${cb(config.name)} success`,
+              "SAGOR-COMMAND",
             );
           } catch (error) {
             global.loading.err(
-              `${chalk.hex("#ff7100")(`LOADED`)} ${chalk.hex("#FFFF00")(command)} fail ` +
+              `${chalk.hex("#ff7100")(`SAGOR-LOADED`)} ${chalk.hex("#FFFF00")(command)} fail ` +
                 error,
-              "COMMAND",
+              "SAGOR-COMMAND",
             );
           }
         }
       })(),
       (async () => {
         const events = readdirSync(
-          join(global.client.mainPath, "modules/events"),
+          join(global.client.mainPath, "Script/events"),
         ).filter(
           (ev) =>
             ev.endsWith(".js") && !global.config.eventDisabled.includes(ev),
         );
-        console.log(cv(`\n` + `●──LOADING EVENTS──●`));
+        console.log(cv(`\n` + `●──SAGOR-EVENTS──●`));
         for (const ev of events) {
           try {
             const event = require(
-              join(global.client.mainPath, "modules/events", ev),
+              join(global.client.mainPath, "Script/events", ev),
             );
             const { config, onLoad, run } = event;
             if (!config || !config.name || !run) {
               global.loading.err(
-                `${chalk.hex("#ff7100")(`LOADED`)} ${chalk.hex("#FFFF00")(ev)} Module is not in the correct format. `,
-                "EVENT",
+                `${chalk.hex("#ff7100")(`SAGOR-LOADED`)} ${chalk.hex("#FFFF00")(ev)} Module is not in the correct format. `,
+                "SAGOR-EVENT",
               );
               continue;
             }
@@ -546,8 +546,8 @@ global.client.commands.set(config.name, module);
 
             if (global.client.events.has(config.name)) {
               global.loading.err(
-                `${chalk.hex("#ff7100")(`LOADED`)} ${chalk.hex("#FFFF00")(ev)} Module is already loaded!`,
-                "EVENT",
+                `${chalk.hex("#ff7100")(`SAGOR+LOADED`)} ${chalk.hex("#FFFF00")(ev)} Module is already loaded!`,
+                "SAGOR-EVENT",
               );
               continue;
             }
@@ -608,39 +608,39 @@ global.client.commands.set(config.name, module);
             }
             global.client.events.set(config.name, event);
             global.loading.log(
-              `${cra(`LOADED`)} ${cb(config.name)} success`,
-              "EVENT",
+              `${cra(`SAGOR-LOADED`)} ${cb(config.name)} success`,
+              "SAGOR-EVENT",
             );
           } catch (err) {
             global.loading.err(
-              `${chalk.hex("#ff0000")("ERROR!")} ${cb(ev)} failed with error: ${err.message}` +
+              `${chalk.hex("#ff0000")("SAGOR-ERROR!")} ${cb(ev)} failed with error: ${err.message}` +
                 `\n`,
-              "EVENT",
+              "SAGOR-EVENT",
             );
           }
         }
       })();
-    console.log(cv(`\n` + `●──BOT START──● `));
+    console.log(cv(`\n` + `●──SAGOR-BOT-START──● `));
     global.loading.log(
-      `${cra(`[ SUCCESS ]`)} Loaded ${cb(`${global.client.commands.size}`)} commands and ${cb(`${global.client.events.size}`)} events successfully`,
-      "LOADED",
+      `${cra(`[ SAGOR-SUCCESS ]`)} Loaded ${cb(`${global.client.commands.size}`)} commands and ${cb(`${global.client.events.size}`)} events successfully`,
+      "SAGOR-LOADED",
     );
     global.loading.log(
       `${cra(`[ TIMESTART ]`)} Launch time: ${((Date.now() - global.client.timeStart) / 1000).toFixed()}s`,
-      "LOADED",
+      "SAGOR-LOADED",
     );
     global.utils.complete({ raw });
     const listener = require("./includes/listen")({ api });
     global.handleListen = api.listenMqtt(async (error, event) => {
       if (error) {
         if (error.error === "Not logged in.") {
-          logger.log("Your bot account has been logged out!", "LOGIN");
+          logger.log("Your bot account has been logged out!", "SAGOR-LOGIN");
           return process.exit(1);
         }
         if (error.error === "Not logged in") {
           logger.log(
             "Your account has been checkpointed, please confirm your account and log in again!",
-            "CHECKPOINT",
+            "SAGOR-CHECKPOINT",
           );
           return process.exit(0);
         }
@@ -656,16 +656,16 @@ global.client.commands.set(config.name, module);
 
 (async () => {
   try {
-    console.log(cv(`\n` + `●──DATABASE──●`));
+    console.log(cv(`\n` + `●──SAGOR-DATABASE──●`));
     global.loading.log(
-      `${cra(`[ CONNECT ]`)} Connected to JSON database successfully!`,
-      "DATABASE",
+      `${cra(`[ SAGOR-CONNECT ]`)} Connected to JSON database successfully!`,
+      "SAGOR-DATABASE",
     );
     onBot();
   } catch (error) {
     global.loading.err(
-      `${cra(`[ CONNECT ]`)} Failed to connect to the JSON database: ` + error,
-      "DATABASE",
+      `${cra(`[ SAGOR-CONNECT ]`)} Failed to connect to the JSON database: ` + error,
+      "SAGOR-DATABASE",
     );
   }
 })();
