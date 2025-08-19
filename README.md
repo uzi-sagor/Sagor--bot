@@ -144,13 +144,13 @@ __=>__ Host your botfile on [render.com](https://dashboard.render.com) to make y
 > - Rainbow
 > - Hacker
 
-Go to your `config.json` and set it in the language property:
+Go to your `Sagor.json` and set it in the language property:
 ```json
 {
   "DESIGN": {
-    "Title": "BotPack",
+    "Title": "Sagor",
     "Theme": "Blue",
-    "Admin": "YOUR_NAME"
+    "Admin": "Sagor"
   }
 }
 ```
@@ -161,7 +161,7 @@ Go to your `config.json` and set it in the language property:
 <div align="center">
       <h1>Author: </h1>
       <h3>YanMaglinte🔥</h3>
-      <h3> Dip To (modifier)</h3>     
+      <h3> SaGor (modifier)</h3>     
      </div>
 
 - If you encounter any issues or have questions related to this REPL, please don't hesitate to reach out on Facebook!
@@ -191,8 +191,40 @@ Special thanks to the following fellows for their amazing projects making this m
 - NTKhang03
 - KhangGia1810
 - XaviaTeam
+- Sagor
 <br>
 _Updated on: May 12, 2024 (PST)<br>Creation Date: June 11, 2023_
 
 ---
 Copyright © 2024 Yan Maglinte (YANDEVA), Philippines.<br>
+
+##BOT RUNNING WORKFLOWS
+```
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npm start
+```
