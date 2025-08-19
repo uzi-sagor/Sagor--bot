@@ -2,16 +2,16 @@ module.exports.config = {
   name: "help",
   version: "1.0.2",
   hasPermission: 0,
-  credits: "Mirai Team & Mod by Yan Maglinte",
+  credits: "SaGor",
   description: "Beginner's Guide",
   usePrefix: true,
   commandCategory: "guide",
   usages: "[Shows Commands]",
   cooldowns: 5,
   envConfig: {
-    autoUnsend: true,
-    delayUnsend: 60
-  }
+		autoUnsend: true,
+		delayUnsend: 60
+	}
 };
 
 module.exports.languages = {
@@ -76,11 +76,9 @@ module.exports.run = async function ({ api, event, args, getText }) {
 
   if (!command) {
     const commandList = Array.from(commands.values());
-    const categories = new Set(
-      commandList.map((cmd) => 
-        (cmd.config?.commandCategory || cmd.config?.category || "unknown").toLowerCase()));
+    const categories = new Set(commandList.map((cmd) => cmd.config.commandCategory.toLowerCase()));
     const categoryCount = categories.size;
-  
+
     const categoryNames = Array.from(categories);
     const itemsPerPage = 10;
     const totalPages = Math.ceil(categoryNames.length / itemsPerPage);
@@ -110,8 +108,8 @@ module.exports.run = async function ({ api, event, args, getText }) {
     for (let i = 0; i < visibleCategories.length; i++) {
       const category = visibleCategories[i];
       const categoryCommands = commandList.filter(
-        (cmd) => 
-          (cmd.config.commandCategory ? cmd.config.commandCategory.toLowerCase() : 'unknown') === category
+        (cmd) =>
+          cmd.config.commandCategory.toLowerCase() === category
       );
       const commandNames = categoryCommands.map((cmd) => cmd.config.name);
       const numberFont = [
@@ -163,12 +161,7 @@ module.exports.run = async function ({ api, event, args, getText }) {
     const fs = require("fs-extra");
     const imgP = [];
     const img = [
-      "https://i.imgur.com/ruQ2pRn.jpg",
-      "https://i.imgur.com/HXHb0cB.jpg",
-      "https://i.imgur.com/ZJEI6KW.jpg",
-      "https://i.imgur.com/XGL57Wp.jpg",
-      "https://i.imgur.com/6OB00HJ.jpg",
-      "https://i.imgur.com/6vHaRZm.jpg"
+      "https://i.ibb.co/VcNdjtmr/help.png"
     ];
     const path = __dirname + "/cache/menu.png";
     const rdimg = img[Math.floor(Math.random() * img.length)];
@@ -181,17 +174,17 @@ module.exports.run = async function ({ api, event, args, getText }) {
     imgP.push(fs.createReadStream(path));
     const config = require("./../../Sagor.json")
     const msgg = {
-  body: `╭──────────────╮\n│𝖢𝗈𝗆𝗆𝖺𝗇𝖽 & 𝖢𝖺𝗍𝖾𝗀𝗈𝗋𝗒│\n╰──────────────╯\n‣ Bot Owner: ${config.DESIGN.Admin}\n\n` + msg + `\n◖Total pages available: ${totalPages}.\n` + `\n╭ ──── ╮\n│ GUIDE │\n╰ ──── ╯\n` + getText("guideList", config.PREFIX),
+  body: `╭──────────────╮\n│ 𝖢𝗈𝗆𝗆𝖺𝗇𝖽/𝖢𝖺𝗍𝖾𝗀𝗈𝗋𝗒 │\n╰──────────────╯\n‣ Bot Owner: ${config.DESIGN.Admin}\n\n` + msg + `\n◖Total pages available: ${totalPages}.\n` + `\n╭ ────── ╮\n│    GUIDE    │\n╰ ────── ╯\n` + getText("guideList", config.PREFIX),
   attachment: imgP,
 };
 
     const sentMessage = await api.sendMessage(msgg, threadID, messageID);
 
-
-      setTimeout(() => {
-  api.unsendMessage(sentMessage.messageID);
-      }, 60000);
-
+    if (autoUnsend) {
+      setTimeout(async () => {
+        await api.unsendMessage(sentMessage.messageID);
+      }, delayUnsend * 1000);
+    }
   } else {
     return api.sendMessage(
       getText(
