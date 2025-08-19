@@ -168,8 +168,7 @@ module.exports.run = async function ({ api, event, args, getText }) {
       "https://i.imgur.com/ZJEI6KW.jpg",
       "https://i.imgur.com/XGL57Wp.jpg",
       "https://i.imgur.com/6OB00HJ.jpg",
-      "https://i.imgur.com/6vHaRZm.jpg",
-      "https://i.imgur.com/k6uE93k.jpg"
+      "https://i.imgur.com/6vHaRZm.jpg"
     ];
     const path = __dirname + "/cache/menu.png";
     const rdimg = img[Math.floor(Math.random() * img.length)];
